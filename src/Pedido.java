@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Pedido {
     private List<Pizza> pizzas;
-    private static int nextId = 1; 
+    private static Set<Integer> idsGerados = new HashSet<>(); // Conjunto para rastrear os IDs únicos
     private int idPedido;
     private double valorTotal;
     private EstadoPedido estado; // Atributo para o estado do pedido
@@ -20,8 +23,17 @@ public class Pedido {
     // Construtor
     public Pedido() {
         this.pizzas = new ArrayList<>();
-        this.idPedido = nextId++;
+        this.idPedido = gerarIdUnico(); // Gera um ID único
         this.estado = EstadoPedido.ABERTO; // Inicializa o estado como ABERTO
+    }
+
+    private int gerarIdUnico() {
+        int id;
+        do {
+            id = ThreadLocalRandom.current().nextInt(1, 1000000); // Gera um ID entre 1 e 1.000.000
+        } while (idsGerados.contains(id)); // Garante que não seja repetido
+        idsGerados.add(id); // Adiciona o ID ao conjunto de IDs gerados
+        return id;
     }
 
     public double getValorTotal() {
@@ -78,3 +90,4 @@ public class Pedido {
                 '}';
     }
 }
+
