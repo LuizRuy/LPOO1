@@ -1017,7 +1017,7 @@ public class PizzariaGUI extends JFrame {
 
             if (pedidoIndex != -1) {
                 pedido = listaPedidos.get(pedidoIndex); 
-                exibirItensPedidoAtual();
+                //exibirItensPedidoAtual();
 
             }
         }
